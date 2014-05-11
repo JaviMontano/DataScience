@@ -1,0 +1,95 @@
+Lectura
+========================================================
+Libro: Learning R
+========================================================
+
+Capítulo 2: "A scientific calculator"
+========================================================
+
+
+Anotaciones 1/3
+========================================================
+
+Probando el Operador "+" y ":"
+-------------------------
+
+
+```r
+2 + 2
+```
+
+```
+## [1] 4
+```
+
+
+Como se espera, el resultado (aparente es 4)
+Sin embargo, una respuesta más precisa, podría ser
+un vector cuyo único valor es 4. Eso explica el [1]
+que se visualiza al lado izquierdo del número.
+
+
+```r
+1:4
+```
+
+```
+## [1] 1 2 3 4
+```
+
+
+Crea una secuencia del número inicial hasta el número final
+
+Probando la función "c( )"
+-------------------------
+
+Nota: Las variables (y sus nombres) son sensibles a mayúsculas
+
+
+```r
+c(1, 2, 3, 4) + c(1, 2, 3, 4)
+```
+
+```
+## [1] 2 4 6 8
+```
+
+
+Suma cada elemento de la combinación 1 con los de la 2. R, tiene una         naturaleza vectorizada. Vectorizado, quiere decir sin sintáxis trabajará una sentencia en cada elemento de un vector. Una segunda implicación, hace referencia a que se puede usar un vecotr en funciones para diferentes operaciones. 
+
+
+```r
+sum(1:5)
+```
+
+```
+## [1] 15
+```
+
+
+Todos los Operadores aritméticos están vectorizados.
+
+
+```r
+c(2, 3, 5, 7, 11, 13) - 2  # Muestra la resta
+```
+
+```
+## [1]  0  1  3  5  9 11
+```
+
+
+
+```r
+-2:2 * -2:2  # Muestra la multiplicación
+```
+
+```
+## [1] 4 1 0 1 4
+```
+
+
+Las otras operaciones básicas son exponenciación, con el operador ^ o **, división (con decimales) con el operador /, división entera con %/% y residuo con su operador %%. En adición R, contiene una amplia variedad de funciones matemáticas.
+
+
+
