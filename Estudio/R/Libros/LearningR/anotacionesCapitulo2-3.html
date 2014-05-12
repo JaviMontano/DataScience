@@ -185,76 +185,79 @@ hljs.initHighlightingOnLoad();
 
 <h1>Capítulo 2: &ldquo;A scientific calculator&rdquo;</h1>
 
-<h1>Anotaciones 2/3</h1>
+<h1>Anotaciones 3/3</h1>
 
-<h2>Probando el Operador los operadores lógicos</h2>
+<h2>Asignando variables</h2>
 
-<p>El operador == sirve para verificar la igualdad entre dos enteros. Al igual que los demás operadores es un operador vectorizado. El opuesto de == que se lee &ldquo;igual que&rdquo;, es != que signficia &ldquo;diferente de&rdquo;.</p>
+<p>El operador &lt;- se utiliza para asignar valores a variables.</p>
 
-<p>Los operadores &ldquo;mayor que&rdquo;, &gt;, &ldquo;menor qué&rdquo;, &lt; y sus combinaciones &ldquo;mayor/menor que o igual&rdquo;, &gt;=, &lt;= están igualmente permitidas. </p>
-
-<p>Todos estos, pueden ser usados para comparar textos además de lo mostrado con números. Para tal efecto, tenga en cuenta que las letras tienen un valor asociado.</p>
-
-<pre><code class="r">c(3, 4 - 1, 1 + 1 + 1) == 3  # Validaciones veraderas
+<pre><code class="r">x &lt;- 3
+x * 2
 </code></pre>
 
-<pre><code>## [1] TRUE TRUE TRUE
+<pre><code>## [1] 6
 </code></pre>
 
-<pre><code class="r">
-1:3 != 3:1  # Validaciones mixtas
+<p>Notese que no se declaró a la variable x en ningún momento. Tal concepto (declarar) no existe en R, a diferencia de los lenguajes compilados en término generales.</p>
+
+<p>Variables pueden contener números y simbolos, siempre que empiecen con una letra. De igual forma deben respetar ciertos criterios de palabras y caracteres reservados.</p>
+
+<p>Una ampliación de las asignaciones sintacticamente correctas, puede encontrarse en la ayuda ?make.names.</p>
+
+<h3>Asignaciones globales</h3>
+
+<p>Para realizar una asignación de variables disponible en todos los ambientes de trabajo se debe usar el operador &lt;&lt;-</p>
+
+<h3>La función assign()</h3>
+
+<p>La función assign es útil en el manejo y diseño de funciones. Puede usarse para asignar variables locales o globales. (&lt;-, &lt;&lt;-)</p>
+
+<p>Citando el texto:</p>
+
+<pre><code>There is one more method of variable assignment, via the assign function. It is much less common than the other methods, but very occasionally it is useful to have a function syntax for assigning variables. Local (normal) assignment takes two argumentsthe name of the variable to assign to and the value you want to give it:
+
+assign(&quot;my_local_variable&quot;, 9 ^ 3 + 10 ^ 3)
+
+Global assignment (like the &lt;&lt;- operator does) takes an extra argument:
+
+assign(&quot;my_global_variable&quot;, 1 ^ 3 + 12 ^ 3, globalenv())
+
+Using the assign function makes your code less readable compared to &lt;-, so you should use it sparingly. It occasionally makes things easier in some advanced programming cases involving environments, but if your code is filled with calls to assign, you are probably doing something wrong.
+Also note that the assign function doesnt check its first argument to see if it is a valid variable name: it always just creates it.
 </code></pre>
 
-<pre><code>## [1]  TRUE FALSE  TRUE
+<p>Se aprecia que la asignación de una variable no muestra el contenido de la variable. Para ver el contenido debe escribirse la variable dentro de la consola.</p>
+
+<pre><code class="r">x &lt;- 3
+x
 </code></pre>
 
-<pre><code class="r">
-(1:5)^2 &gt;= 16  # Validaciones falsas
+<pre><code>## [1] 3
 </code></pre>
 
-<pre><code>## [1] FALSE FALSE FALSE  TRUE  TRUE
+<p>En algunos casos (dependiendo del OS) deberá incluso hacerse explícito la impresión del valor usando la función print(-nombre de la variable-)</p>
+
+<p>Si se deseara imprimir al momento de asignar se tienen dos posiblidades:</p>
+
+<ul>
+<li>Escribir las dos líneas de código separadas por ;</li>
+</ul>
+
+<pre><code class="r">x &lt;- 3
+x
 </code></pre>
 
-<pre><code class="r">c(&quot;Can&quot;, &quot;you&quot;, &quot;can&quot;, &quot;a&quot;, &quot;can&quot;, &quot;as&quot;, &quot;a&quot;, &quot;canner&quot;, &quot;can&quot;, &quot;can&quot;, &quot;a&quot;, &quot;can?&quot;) == 
-    &quot;can&quot;
+<pre><code>## [1] 3
 </code></pre>
 
-<pre><code>##  [1] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE
-## [12] FALSE
+<ul>
+<li>Escribir la asignación entre paréntesis</li>
+</ul>
+
+<pre><code class="r">(x &lt;- 3)
 </code></pre>
 
-<pre><code class="r">c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;) &lt; &quot;C&quot;
-</code></pre>
-
-<pre><code>## [1]  TRUE  TRUE FALSE FALSE
-</code></pre>
-
-<h2>Nota aclaratoria (Citando al libro) </h2>
-
-<h2>Tener en cuenta si la precisión es crítica con números muy pequeños</h2>
-
-<pre><code>Comparing nonintegers using == is problematic. All the numbers we have dealt with so far are floating point numbers. That means that they are stored in the form a * 2 ^ b, for two numbers a and b. Since this whole form has to be stored in 32 bits, the resulting number is only an approximation of what you really want. This means that rounding errors often creep into calculations, and the answers you expected can be wildly wrong. Whole books have been written on this subject; there is too much to worry about here. Since this is such a common mistake, the FAQ on R has an entry about it, and its a good place to start if you want to know more.
-
-Consider these two numbers, which should be the same:
-
-sqrt(2) ^ 2 == 2 #sqrt is the square-root function
-## [1] FALSE
-sqrt(2) ^ 2 - 2 #this small value is the rounding error
-## [1] 4.441e-16
-
-R also provides the function all.equal for checking equality of numbers. This provides a tolerance level (by default, about 1.5e-8), so that rounding errors less than the tolerance are ignored
-
-all.equal(sqrt(2) ^ 2, 2)
-## [1] TRUE
-If the values to be compared are not the same, all.equal returns a report on the differences.
-If you require a TRUE or FALSE value, then you need to wrap the call to
-all.equal in a call to isTRUE:
-
-all.equal(sqrt(2) ^ 2, 3)
-## [1] &quot;Mean relative difference: 0.5&quot;
-isTRUE(all.equal(sqrt(2) ^ 2, 3))
-## [1] FALSE
-
+<pre><code>## [1] 3
 </code></pre>
 
 </body>

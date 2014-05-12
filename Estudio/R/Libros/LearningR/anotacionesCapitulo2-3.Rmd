@@ -1,0 +1,72 @@
+Lectura
+========================================================
+Libro: Learning R
+========================================================
+
+Capítulo 2: "A scientific calculator"
+========================================================
+
+
+Anotaciones 3/3
+========================================================
+
+Asignando variables
+-------------------------
+
+El operador <- se utiliza para asignar valores a variables.
+```{r}
+x <- 3
+x*2
+````
+
+Notese que no se declaró a la variable x en ningún momento. Tal concepto (declarar) no existe en R, a diferencia de los lenguajes compilados en término generales.
+
+Variables pueden contener números y simbolos, siempre que empiecen con una letra. De igual forma deben respetar ciertos criterios de palabras y caracteres reservados.
+
+Una ampliación de las asignaciones sintacticamente correctas, puede encontrarse en la ayuda ?make.names.
+
+### Asignaciones globales
+
+Para realizar una asignación de variables disponible en todos los ambientes de trabajo se debe usar el operador <<-
+
+### La función assign()
+
+La función assign es útil en el manejo y diseño de funciones. Puede usarse para asignar variables locales o globales. (<-, <<-)
+
+Citando el texto:
+
+```
+There is one more method of variable assignment, via the assign function. It is much less common than the other methods, but very occasionally it is useful to have a function syntax for assigning variables. Local (“normal”) assignment takes two arguments—the name of the variable to assign to and the value you want to give it:
+
+assign("my_local_variable", 9 ^ 3 + 10 ^ 3)
+
+Global assignment (like the <<- operator does) takes an extra argument:
+
+assign("my_global_variable", 1 ^ 3 + 12 ^ 3, globalenv())
+
+Using the assign function makes your code less readable compared to <-, so you should use it sparingly. It occasionally makes things easier in some advanced programming cases involving environments, but if your code is filled with calls to assign, you are probably doing something wrong.
+Also note that the assign function doesn’t check its first argument to see if it is a valid variable name: it always just creates it.
+```
+
+Se aprecia que la asignación de una variable no muestra el contenido de la variable. Para ver el contenido debe escribirse la variable dentro de la consola.
+
+```{r}
+x <- 3
+x
+````
+
+En algunos casos (dependiendo del OS) deberá incluso hacerse explícito la impresión del valor usando la función print(-nombre de la variable-)
+
+Si se deseara imprimir al momento de asignar se tienen dos posiblidades:
+
+* Escribir las dos líneas de código separadas por ; (pese a que esto da la ilusión de haber hecho algo diferente, es lo mismo que lo anterior)
+
+```{r}
+x <- 3; x
+````
+
+* Escribir la asignación entre paréntesis
+
+```{r}
+(x <- 3)
+````

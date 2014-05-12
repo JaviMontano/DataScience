@@ -61,7 +61,3 @@ isTRUE(all.equal(sqrt(2) ^ 2, 3))
 ## [1] FALSE
 
 ````
-
-
-
-

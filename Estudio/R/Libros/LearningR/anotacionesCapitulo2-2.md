@@ -17,7 +17,8 @@ El operador == sirve para verificar la igualdad entre dos enteros. Al igual que 
 
 Los operadores "mayor que", >, "menor qué", < y sus combinaciones "mayor/menor que o igual", >=, <= están igualmente permitidas. 
 
-Todos estos, pueden ser usados para comparar textos además de lo mostrado con números.
+Todos estos, pueden ser usados para comparar textos además de lo mostrado con números. Para tal efecto, tenga en cuenta que las letras tienen un valor asociado.
+
 
 
 ```r
@@ -56,6 +57,14 @@ c("Can", "you", "can", "a", "can", "as", "a", "canner", "can", "can", "a", "can?
 ## [12] FALSE
 ```
 
+```r
+c("A", "B", "C", "D") < "C"
+```
+
+```
+## [1]  TRUE  TRUE FALSE FALSE
+```
+
 
 Nota aclaratoria (Citando al libro) 
 -------------------------
@@ -86,7 +95,3 @@ isTRUE(all.equal(sqrt(2) ^ 2, 3))
 ## [1] FALSE
 
 ````
-
-
-
-
