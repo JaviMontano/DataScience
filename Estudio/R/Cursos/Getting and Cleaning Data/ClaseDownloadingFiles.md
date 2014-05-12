@@ -1,0 +1,56 @@
+Practica
+========================================================
+Clase: Learning R
+========================================================
+
+Curso: "Getting and Cleaning Data"
+========================================================
+Programa de Análisis de Datos de la John Hopkins en Coursera
+========================================================
+
+La primera anotación básica, es identificar el espacio de trabajo en el que se encuentra la información y dónde estará definido el espacio de trabajo. Lo anterior hace referencia al a la ubicación del datos y del Working Directory (o espacio de trabajo, usualmente llamado WD) de R.
+
+Funciones importantes para definir o identificar el WD
+-------------------------
+
+
+```r
+getwd()
+```
+
+```
+## [1] "C:/Users/Javier A. Montaño/Documents/GitHub/DataScience/Estudio/R/Cursos/Getting and Cleaning Data"
+```
+
+
+La función anterior, devuelve la ruta que representa el WD en tiempo de ejecución.
+
+```
+setwd("./TrabajoR") 
+# Asingación con directorio relativo
+
+setwd("C:/Users/Javier A. Montaño/Documents/My Box Files/DataScience/R/TrabajoR") 
+# Asingación con directorio absoluto
+
+````
+
+### Nota: Según sea el sistema operativo, deberá usarse el simbolo / o \ para la creación de directorios.
+
+Las dos funciones anteriores, pese a que no muestran ningún cambio aparente, en ejecución, cambian el directorio. La diferencia de la primera con la segunda, está dada en que la una asigna el directorio de forma explícita, la otra lo hace de forma relativa.
+
+
+Buenas practicas en para el trabajo con datos
+-------------------------
+
+Una buena práctica para el uso de datos, es utilizar un directorio para los repositorios que contengan las fuentes.
+
+Una forma de hacerlo, sugerida por el profesor, es la siguiente:
+
+
+```r
+if (!file.exists("data")) {
+    dir.create("data")
+}
+```
+
+El código anterior, lo que permite es verificar si existe un directorio "data", si existe no ocurre nada, si en cambio, el directorio no existe, es creado.
