@@ -181,7 +181,7 @@ hljs.initHighlightingOnLoad();
 <body>
 <h1>Practica</h1>
 
-<h1>Clase: Learning R</h1>
+<h1>Clase: Downloading Files 05/2014</h1>
 
 <h1>Curso: &ldquo;Getting and Cleaning Data&rdquo;</h1>
 
@@ -223,6 +223,49 @@ setwd(&quot;C:/Users/Javier A. Montaño/Documents/My Box Files/DataScience/R/Tra
 </code></pre>
 
 <p>El código anterior, lo que permite es verificar si existe un directorio &ldquo;data&rdquo;, si existe no ocurre nada, si en cambio, el directorio no existe, es creado.</p>
+
+<p>Otra buena costumbre, está dada en guardar la fecha de obtención de la información.</p>
+
+<p>Una propuesta para esto, es inmediatamente después de la descarga, almacenar la fecha.</p>
+
+<pre><code class="r">DateDownloaded &lt;- date()
+DateDownloaded
+</code></pre>
+
+<pre><code>## [1] &quot;Sun May 11 22:50:01 2014&quot;
+</code></pre>
+
+<h2>Descargar datos de Internet</h2>
+
+<p>Peses a que los archivos puede ser descargados de manera independiente, hacerlo dentro del Script que se desarrolla, dá más fuerza a la replicabilidad del estudio desarrollado.</p>
+
+<p>Para eso, en R se cuenta con la función download.file()</p>
+
+<p>Sus parámetros destacados (importantes) son:
+URL (ubicación del fichero), destfile (destino del fichero) y method (método de descarga)</p>
+
+<p>Para el ejemplo, se utlizó la base de datos de consulta de la ciudad de Baltimore en la información de cámaras de foto multas.</p>
+
+<p>URL: <a href="https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru">https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru</a></p>
+
+<p>Dentro de ella, se seleccione el enlace directo para descargar la información de las cámaras en formato CSV.
+URL:
+<a href="https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD">https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD</a></p>
+
+<p>Así pues, para descargar se recomienda almacenar el dato URL en una variable y luego utilizar los parametros de la función download.file()</p>
+
+<pre><code class="r">FileUrl &lt;- &quot;https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD&quot;  #Llena la variable con la URL de descarga
+download.file(url = FileUrl, destfile = &quot;./data/cameras.csv&quot;, method = &quot;curl&quot;)  #Descarga los datos (el fichero)
+</code></pre>
+
+<pre><code>## Warning: download had nonzero exit status
+</code></pre>
+
+<pre><code>list.files(path=&quot;./data&quot;)
+[1] &quot;cameras.csv&quot;
+</code></pre>
+
+<h3>Nota: El método &ldquo;curl&rdquo; se usa cuando la url viene de un sitio https y no necesarimanete es requerido en Windows.</h3>
 
 </body>
 

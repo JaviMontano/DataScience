@@ -1,6 +1,6 @@
 Practica
 ========================================================
-Clase: Learning R
+Clase: Downloading Files 05/2014
 ========================================================
 
 Curso: "Getting and Cleaning Data"
@@ -54,3 +54,55 @@ if (!file.exists("data")) {
 ```
 
 El código anterior, lo que permite es verificar si existe un directorio "data", si existe no ocurre nada, si en cambio, el directorio no existe, es creado.
+
+Otra buena costumbre, está dada en guardar la fecha de obtención de la información.
+
+Una propuesta para esto, es inmediatamente después de la descarga, almacenar la fecha.
+
+
+```r
+DateDownloaded <- date()
+DateDownloaded
+```
+
+```
+## [1] "Sun May 11 22:50:01 2014"
+```
+
+
+Descargar datos de Internet
+-------------------------
+
+Peses a que los archivos puede ser descargados de manera independiente, hacerlo dentro del Script que se desarrolla, dá más fuerza a la replicabilidad del estudio desarrollado.
+
+Para eso, en R se cuenta con la función download.file()
+
+Sus parámetros destacados (importantes) son:
+URL (ubicación del fichero), destfile (destino del fichero) y method (método de descarga)
+
+Para el ejemplo, se utlizó la base de datos de consulta de la ciudad de Baltimore en la información de cámaras de foto multas.
+
+URL: https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru
+
+Dentro de ella, se seleccione el enlace directo para descargar la información de las cámaras en formato CSV.
+URL:
+https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD
+
+Así pues, para descargar se recomienda almacenar el dato URL en una variable y luego utilizar los parametros de la función download.file()
+
+
+```r
+FileUrl <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD"  #Llena la variable con la URL de descarga
+download.file(url = FileUrl, destfile = "./data/cameras.csv", method = "curl")  #Descarga los datos (el fichero)
+```
+
+```
+## Warning: download had nonzero exit status
+```
+
+```
+list.files(path="./data")
+[1] "cameras.csv"
+```
+### Nota: El método "curl" se usa cuando la url viene de un sitio https y no necesarimanete es requerido en Windows.
+
