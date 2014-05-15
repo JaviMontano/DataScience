@@ -14,11 +14,13 @@ Generalmente son archivos de bajo peso frente a la información que contienen.
 
 Su estructura es similar a XML pero utiliza diferente sintáxis y formato.
 
-Los datos son almacenados como:
+Sirve para almacenar:
 
-- Numeros 
+- Numeros ("Dobles")
 - Textos (En comillas dobles)
-- 
+- Boleanos (true o false)
+- Array (Ordenados, separados por comas y encerrado entre corchetes [])
+- Objetos (Desordenados, colección de datos emparejados de llave:valores en llaves {})
 
 ```
 <Etiqueta de Inicio> Contenido </ Etiqueta de Cierre >
