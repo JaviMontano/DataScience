@@ -1,0 +1,36 @@
+Practica
+========================================================
+Clase: Reading XML 05/2014
+========================================================
+
+Curso: "Getting and Cleaning Data"
+========================================================
+Programa de Análisis de Datos de la John Hopkins en Coursera
+========================================================
+
+XML traduce Extensible Markup Language. Es bastante usado para almacenar datos de manera estructurada.
+
+Extraer datos de un XML es la base para el sondeo web de información.
+
+Se compone principalmente de "etiquetas"
+```
+<Etiqueta de Inicio> Contenido </ Etiqueta de Cierre >
+```
+Puede también encontrarse etiquetas sin contenido
+
+```
+<line-break \>
+```
+Los atributos del contenido son componentes de la etiqueta:
+
+```
+< img src="imagen.jpg" alt="imagen de ejemplo" />
+```
+
+Las etiquetas pueden (y tienden a) estar anidadas.
+
+Paquete XML
+-----------------------
+```{r}
+library(xml) # Asumiendo que el paquete está instalado
+```
