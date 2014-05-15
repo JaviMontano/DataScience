@@ -32,5 +32,6 @@ Las etiquetas pueden (y tienden a) estar anidadas.
 Paquete XML
 -----------------------
 ```{r}
-library(xml) # Asumiendo que el paquete está instalado
+library(XML) # Asumiendo que el paquete está instalado
 ```
+### Es el recomendado por el instructor.
