@@ -1,0 +1,39 @@
+Practica
+========================================================
+Clase: Reading JSON 05/2014
+========================================================
+
+Curso: "Getting and Cleaning Data"
+========================================================
+Programa de Análisis de Datos de la John Hopkins en Coursera
+========================================================
+
+JSON refiera a Java Script Object Notation.
+
+Generalmente son archivos de bajo peso frente a la información que contienen.
+
+Su estructura es similar a XML pero utiliza diferente sintáxis y formato.
+
+Los datos son almacenados como:
+
+- Numeros 
+- Textos (En comillas dobles)
+- 
+
+```
+<Etiqueta de Inicio> Contenido </ Etiqueta de Cierre >
+```
+Puede también encontrarse etiquetas sin contenido
+
+```
+<line-break \>
+```
+Los atributos del contenido son componentes de la etiqueta:
+
+```
+< img src="imagen.jpg" alt="imagen de ejemplo" />
+```
+
+Las etiquetas pueden (y tienden a) estar anidadas.
+
+Paquete XML
