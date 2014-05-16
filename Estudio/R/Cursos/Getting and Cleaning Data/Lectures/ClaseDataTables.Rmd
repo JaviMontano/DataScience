@@ -1,0 +1,61 @@
+Practica
+========================================================
+Clase: Reading JSON 05/2014
+========================================================
+
+Curso: "Data Tables"
+========================================================
+Programa de Análisis de Datos de la John Hopkins en Coursera
+========================================================
+
+
+Utilizar la información en R de forma similar a un gestor de bases de datos es posibles, en tanto los dataframes pueden ser utilizados como tablas.
+
+El paquete Data Table
+------------------
+
+El paquete fue escrito en C y ha demostrado ser mucho más eficiente para la ejecución de ciertas tareas, de manera especial para realizar filtros, grupos (agrupamientos) entre varios cálculos.
+
+```
+> library(data.table) # Asumiendo que el paquete fue instalado correctamente
+> DF = data.frame(x=rnorm(9),y=rep(c("a","b","c"),each=3),z=rnorm(9))
+> head(DF,3)
+          x y           z
+1 0.8458746 a -0.05059749
+2 0.4456808 a -0.51280434
+3 1.8164608 a  0.63592681
+
+> DT = data.table(x=rnorm(9),y=rep(c("a","b","c"),each=3),z=rnorm(9))
+> head(DT,3)
+             x y          z
+1:  0.18934421 a  0.2314946
+2:  0.75691644 a -0.5226971
+3: -0.04592483 a  1.7968805
+
+```
+Con el código anterior se declaró a DT, tomando los datos de un data frames, como tabla. Veamos:
+
+```
+> tables()
+     NAME NROW MB COLS  KEY
+[1,] DT      9 1  x,y,z    
+Total: 1MB
+
+```
+Filtrando en Tablas
+------------------
+
+Para filtrar se utilizan los operadores [] pero de manera(s) diferente(s).
+
+```
+> DT[2,] # Filtrar la segunda columna de la tabla
+           x y          z
+1: 0.7569164 a -0.5226971
+> DT[DT$y=="a",] # Filtrar la columna y donde los elementos son iguales que "a"
+             x y          z
+1:  0.18934421 a  0.2314946
+2:  0.75691644 a -0.5226971
+3: -0.04592483 a  1.7968805
+
+```
+
