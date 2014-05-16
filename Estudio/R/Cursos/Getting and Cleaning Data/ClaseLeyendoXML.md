@@ -31,9 +31,11 @@ Las etiquetas pueden (y tienden a) estar anidadas.
 
 Paquete XML
 -----------------------
-```{r}
-library(XML) # Asumiendo que el paquete está instalado
+
+```r
+library(XML)  # Asumiendo que el paquete está instalado
 ```
+
 ### Es el recomendado por el instructor. Se destaca por tener funciones de la familia Apply para pasar a valores del XML y de manera especialisima, su capacidad de interpretar XPath (un lenguage en sí).
 
 Funciones del paquete XML
@@ -43,10 +45,12 @@ Funciones del paquete XML
 
 Sirve para que se cargue la información del XML
 
-```{r}
+
+```r
 fileUrl <- "http://www.w3schools.com/xml/simple.xml"
-doc <- xmlTreeParse(fileUrl,useInternal=TRUE)
+doc <- xmlTreeParse(fileUrl, useInternal = TRUE)
 ```
+
 En ese momento la información del contenido queda guardada en la memoria interna.
 
 ### xmlRoot() y xmlName()
