@@ -154,7 +154,7 @@ hr {
 
 <p>Generalmente son archivos de bajo peso frente a la información que contienen.</p>
 
-<p>Su estructura es similar a XML pero utiliza diferente sintáxis y formato.</p>
+<p>Su estructura es similar a XML en el sentido de ser estructurado, pero utiliza diferente sintáxis, tipos de datos (no son tags) y formato.</p>
 
 <p>Sirve para almacenar:</p>
 
@@ -165,6 +165,83 @@ hr {
 <li>Array (Ordenados, separados por comas y encerrado entre corchetes [])</li>
 <li>Objetos (Desordenados, colección de datos emparejados de llave:valores en llaves {})</li>
 </ul>
+
+<h2>El paquete JSON lite</h2>
+
+<h3>Es el recomendado por el instructor.</h3>
+
+<h2>Las funciones del paquete JSON lite básicas que pueden ser utilizadas.</h2>
+
+<h3>from fromJSON()</h3>
+
+<p>Función que interpreta un archivo JSON y lo carga.</p>
+
+<pre><code>&gt; library(jsonlite) # Asumiendo que el paquete está instlado
+&gt; jsonData &lt;- fromJSON(&quot;https://api.github.com/users/jtleek/repos&quot;)
+&gt; names(jsonData)
+ [1] &quot;id&quot;                &quot;name&quot;              &quot;full_name&quot;         &quot;owner&quot;            
+ [5] &quot;private&quot;           &quot;html_url&quot;          &quot;description&quot;       &quot;fork&quot;             
+ [9] &quot;url&quot;               &quot;forks_url&quot;         &quot;keys_url&quot;          &quot;collaborators_url&quot;
+[13] &quot;teams_url&quot;         &quot;hooks_url&quot;         &quot;issue_events_url&quot;  &quot;events_url&quot;       
+[17] &quot;assignees_url&quot;     &quot;branches_url&quot;      &quot;tags_url&quot;          &quot;blobs_url&quot;        
+[21] &quot;git_tags_url&quot;      &quot;git_refs_url&quot;      &quot;trees_url&quot;         &quot;statuses_url&quot;     
+[25] &quot;languages_url&quot;     &quot;stargazers_url&quot;    &quot;contributors_url&quot;  &quot;subscribers_url&quot;  
+[29] &quot;subscription_url&quot;  &quot;commits_url&quot;       &quot;git_commits_url&quot;   &quot;comments_url&quot;     
+[33] &quot;issue_comment_url&quot; &quot;contents_url&quot;      &quot;compare_url&quot;       &quot;merges_url&quot;       
+[37] &quot;archive_url&quot;       &quot;downloads_url&quot;     &quot;issues_url&quot;        &quot;pulls_url&quot;        
+[41] &quot;milestones_url&quot;    &quot;notifications_url&quot; &quot;labels_url&quot;        &quot;releases_url&quot;     
+[45] &quot;created_at&quot;        &quot;updated_at&quot;        &quot;pushed_at&quot;         &quot;git_url&quot;          
+[49] &quot;ssh_url&quot;           &quot;clone_url&quot;         &quot;svn_url&quot;           &quot;homepage&quot;         
+[53] &quot;size&quot;              &quot;stargazers_count&quot;  &quot;watchers_count&quot;    &quot;language&quot;         
+[57] &quot;has_issues&quot;        &quot;has_downloads&quot;     &quot;has_wiki&quot;          &quot;forks_count&quot;      
+[61] &quot;mirror_url&quot;        &quot;open_issues_count&quot; &quot;forks&quot;             &quot;open_issues&quot;      
+[65] &quot;watchers&quot;          &quot;default_branch&quot;
+
+</code></pre>
+
+<h3>from toJSON()</h3>
+
+<p>La función tojson() interpreta un data.frame y lo convierte a JSON. Utilizando el parametro pretty, lo hace con espaciado uniforme.</p>
+
+<pre><code>irisJSON &lt;- toJSON(x=iris,pretty=TRUE)
+cat(irisJSON)
+[
+    {
+        &amp;quot;Sepal.Length&amp;quot; : 5.1,
+        &amp;quot;Sepal.Width&amp;quot; : 3.5,
+        &amp;quot;Petal.Length&amp;quot; : 1.4,
+        &amp;quot;Petal.Width&amp;quot; : 0.2,
+        &amp;quot;Species&amp;quot; : &amp;quot;setosa&amp;quot;
+    },
+    {
+        &amp;quot;Sepal.Length&amp;quot; : 4.9,
+        &amp;quot;Sepal.Width&amp;quot; : 3,
+        &amp;quot;Petal.Length&amp;quot; : 1.4,
+        &amp;quot;Petal.Width&amp;quot; : 0.2,
+        &amp;quot;Species&amp;quot; : &amp;quot;setosa&amp;quot;
+    },
+
+</code></pre>
+
+<h2>Explorando el JSON</h2>
+
+<p>Una vez cargado el documento se puede explorar los documentos usando el operador $ para explorar dataframes. Una diferencia está dada por la capacidad de explorar según el nivel de anidación.</p>
+
+<pre><code>names(jsonData$owner)
+ [1] &quot;login&quot;               &quot;id&quot;                  &quot;avatar_url&quot;          &quot;gravatar_id&quot;        
+ [5] &quot;url&quot;                 &quot;html_url&quot;            &quot;followers_url&quot;       &quot;following_url&quot;      
+ [9] &quot;gists_url&quot;           &quot;starred_url&quot;         &quot;subscriptions_url&quot;   &quot;organizations_url&quot;  
+[13] &quot;repos_url&quot;           &quot;events_url&quot;          &quot;received_events_url&quot; &quot;type&quot;               
+[17] &quot;site_admin&quot; 
+</code></pre>
+
+<pre><code>&gt; jsonData$owner$login
+ [1] &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot;
+[10] &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot;
+[19] &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot;
+[28] &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot;
+
+</code></pre>
 
 </body>
 
