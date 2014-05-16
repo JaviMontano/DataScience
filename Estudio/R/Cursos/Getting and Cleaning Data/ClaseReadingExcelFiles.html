@@ -181,94 +181,106 @@ hljs.initHighlightingOnLoad();
 <body>
 <h1>Practica</h1>
 
-<h1>Clase: Downloading Files 05/2014</h1>
+<h1>Clase: Reading Files from Excel 05/2014</h1>
 
 <h1>Curso: &ldquo;Getting and Cleaning Data&rdquo;</h1>
 
 <h1>Programa de Análisis de Datos de la John Hopkins en Coursera</h1>
 
-<p>La primera anotación básica, es identificar el espacio de trabajo en el que se encuentra la información y dónde estará definido el espacio de trabajo. Lo anterior hace referencia al a la ubicación del datos y del Working Directory (o espacio de trabajo, usualmente llamado WD) de R.</p>
+<p>En esta lección se pretende trabajar la carga de documentos de excel a R.</p>
 
-<h2>Funciones importantes para definir o identificar el WD</h2>
-
-<pre><code class="r">getwd()
-</code></pre>
-
-<pre><code>## [1] &quot;C:/Users/Javier A. Montaño/Documents/GitHub/DataScience/Estudio/R/Cursos/Getting and Cleaning Data&quot;
-</code></pre>
-
-<p>La función anterior, devuelve la ruta que representa el WD en tiempo de ejecución.</p>
-
-<pre><code>setwd(&quot;./TrabajoR&quot;) 
-# Asingación con directorio relativo
-
-setwd(&quot;C:/Users/Javier A. Montaño/Documents/My Box Files/DataScience/R/TrabajoR&quot;) 
-# Asingación con directorio absoluto
-
-</code></pre>
-
-<h3>Nota: Según sea el sistema operativo, deberá usarse el simbolo / o \ para la creación de directorios.</h3>
-
-<p>Las dos funciones anteriores, pese a que no muestran ningún cambio aparente, en ejecución, cambian el directorio. La diferencia de la primera con la segunda, está dada en que la una asigna el directorio de forma explícita, la otra lo hace de forma relativa.</p>
-
-<h2>Buenas practicas en para el trabajo con datos</h2>
-
-<p>Una buena práctica para el uso de datos, es utilizar un directorio para los repositorios que contengan las fuentes.</p>
-
-<p>Una forma de hacerlo, sugerida por el profesor, es la siguiente:</p>
+<p>Una vez más debe cargarse datos de la base de datos de las cámaras de velocidad de la ciudad de Baltimore. Solo que ahora el enlace, será el de la URL del archivo xlsx, de excel.</p>
 
 <pre><code class="r">if (!file.exists(&quot;data&quot;)) {
     dir.create(&quot;data&quot;)
 }
-</code></pre>
-
-<p>El código anterior, lo que permite es verificar si existe un directorio &ldquo;data&rdquo;, si existe no ocurre nada, si en cambio, el directorio no existe, es creado.</p>
-
-<p>Otra buena costumbre, está dada en guardar la fecha de obtención de la información.</p>
-
-<p>Una propuesta para esto, es inmediatamente después de la descarga, almacenar la fecha.</p>
-
-<pre><code class="r">DateDownloaded &lt;- date()
-DateDownloaded
-</code></pre>
-
-<pre><code>## [1] &quot;Mon May 12 20:25:40 2014&quot;
-</code></pre>
-
-<h2>Descargar datos de Internet</h2>
-
-<p>Peses a que los archivos puede ser descargados de manera independiente, hacerlo dentro del Script que se desarrolla, dá más fuerza a la replicabilidad del estudio desarrollado.</p>
-
-<p>Para eso, en R se cuenta con la función download.file()</p>
-
-<p>Sus parámetros destacados (importantes) son:
-URL (ubicación del fichero), destfile (destino del fichero) y method (método de descarga)</p>
-
-<p>Para el ejemplo, se utlizó la base de datos de consulta de la ciudad de Baltimore en la información de cámaras de foto multas.</p>
-
-<p>URL: <a href="https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru">https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru</a></p>
-
-<p>Dentro de ella, se seleccione el enlace directo para descargar la información de las cámaras en formato CSV.
-URL:
-<a href="https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD">https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD</a></p>
-
-<p>Así pues, para descargar se recomienda almacenar el dato URL en una variable y luego utilizar los parametros de la función download.file()</p>
-
-<pre><code class="r">FileUrl &lt;- &quot;https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD&quot;  #Llena la variable con la URL de descarga
-download.file(url = FileUrl, destfile = &quot;./data/cameras.csv&quot;)  #Descarga los datos (el fichero)
+# Si el directorio &#39;data&#39; no existía, se ha creado
+if (!file.exists(&quot;data/cameras.xlsx&quot;)) {
+    FileUrl &lt;- &quot;https://data.baltimorecity.gov/api/views/dz54-2aru/rows.xlsx?accessType=DOWNLOAD&quot;  #Llena la variable con la URL de descarga
+    download.file(url = FileUrl, destfile = &quot;./data/cameras.xlsx&quot;)  #,method= &#39;curl&#39;) #Descarga los datos (el fichero)
+}
 </code></pre>
 
 <pre><code>## Error: esquema de URL sin soporte
 </code></pre>
 
-<pre><code class="r"># ,method=&#39;curl&#39; debe agregarse en algunos OS
+<pre><code class="r"># Si el archivo &#39;cameras.xlsx&#39; no existe, lo descarga method=&#39;curl&#39; debe
+# agregarse en algunos OS Aparentemente la función download file, puede
+# fallar con algunos ficheros de excel, en ese caso tratar de bajar
+# manualmente y continuar con la lección es ideal.
+
+DateDownloaded &lt;- date()
+
+DateDownloaded
 </code></pre>
 
-<pre><code>list.files(path=&quot;./data&quot;)
-[1] &quot;cameras.csv&quot;
+<pre><code>## [1] &quot;Mon May 12 22:06:15 2014&quot;
 </code></pre>
 
-<h3>Nota: El método &ldquo;curl&rdquo; se usa cuando la url viene de un sitio https y no necesarimanete es requerido en Windows.</h3>
+<h2>Librería xlsx</h2>
+
+<pre><code class="r">library(xlsx)  # asumiendo que la librería xlsx ya está instalada
+</code></pre>
+
+<pre><code>## Loading required package: rJava
+## Loading required package: xlsxjars
+</code></pre>
+
+<p>La librería xlsx requiere además tener otras librerías y cargarlas, entre ellas rJava. Que requiere que el JRE esté funcionando e instalado correctamente.</p>
+
+<h3>Función read.xlsx()</h3>
+
+<pre><code class="r">cameraData &lt;- read.xlsx(file = &quot;./data/cameras.xlsx&quot;, sheetIndex = 1, header = TRUE)
+</code></pre>
+
+<pre><code>## Error: Cannot find ./data/cameras.xlsx
+</code></pre>
+
+<pre><code class="r">head(cameraData)
+</code></pre>
+
+<pre><code>## Error: error in evaluating the argument &#39;x&#39; in selecting a method for function &#39;head&#39;: Error: objeto &#39;cameraData&#39; no encontrado
+</code></pre>
+
+<pre><code>                         address direction      street  crossStreet
+1       S CATON AVE &amp; BENSON AVE       N/B   Caton Ave   Benson Ave
+2       S CATON AVE &amp; BENSON AVE       S/B   Caton Ave   Benson Ave
+3 WILKENS AVE &amp; PINE HEIGHTS AVE       E/B Wilkens Ave Pine Heights
+4        THE ALAMEDA &amp; E 33RD ST       S/B The Alameda      33rd St
+5        E 33RD ST &amp; THE ALAMEDA       E/B      E 33rd  The Alameda
+6        ERDMAN AVE &amp; N MACON ST       E/B      Erdman     Macon St
+                intersection                      Location.1
+1     Caton Ave &amp; Benson Ave (39.2693779962, -76.6688185297)
+2     Caton Ave &amp; Benson Ave (39.2693157898, -76.6689698176)
+3 Wilkens Ave &amp; Pine Heights  (39.2720252302, -76.676960806)
+4     The Alameda  &amp; 33rd St (39.3285013141, -76.5953545714)
+5      E 33rd  &amp; The Alameda (39.3283410623, -76.5953594625)
+6         Erdman  &amp; Macon St (39.3068045671, -76.5593167803)
+</code></pre>
+
+<h2>Otros usos</h2>
+
+<pre><code>colIndex &lt;- 2:3
+rowIndex &lt;- 1:4
+cameraDataSubset &lt;- read.xlsx(file= &quot;./data/cameras.xlsx&quot;,sheetIndex= 1,header=TRUE, colIndex= colIndex,rowIndex= rowIndex)
+cameraDataSubset
+ direction      street
+1       N/B   Caton Ave
+2       S/B   Caton Ave
+3       E/B Wilkens Ave
+</code></pre>
+
+<h3>Función write.xlsx</h3>
+
+<p>Es capaz de crear un archivo de excel reescribe el archivo de excel con atributos similares.</p>
+
+<h3>read.xlsx2()</h3>
+
+<p>Es similar a read.xlsx pero mucho más rápida, sin embargo para filtrar resulta inestable.</p>
+
+<h2>Librería XLConnect</h2>
+
+<p>Mayores opciones para el trabajo con archivos de excel</p>
 
 </body>
 

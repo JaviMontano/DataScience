@@ -34,6 +34,12 @@ if (!file.exists("data/cameras.csv")) {
 ```r
 # Si el archivo 'cameras.csv' no existe, lo descarga ,method='curl' debe
 # agregarse en algunos OS
+DateDownloaded <- date()
+DateDownloaded
+```
+
+```
+## [1] "Mon May 12 20:31:31 2014"
 ```
 
 

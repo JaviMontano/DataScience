@@ -26,6 +26,8 @@ download.file(url=FileUrl,destfile="./data/cameras.csv") #Descarga los datos (el
 }
 #Si el archivo "cameras.csv" no existe, lo descarga
 # ,method="curl" debe agregarse en algunos OS
+DateDownloaded <- date()
+DateDownloaded
 ````
 
 

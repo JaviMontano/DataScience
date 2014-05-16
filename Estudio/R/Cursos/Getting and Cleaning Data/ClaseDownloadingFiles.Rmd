@@ -79,8 +79,8 @@ Así pues, para descargar se recomienda almacenar el dato URL en una variable y 
 
 ```{r}
 FileUrl <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD" #Llena la variable con la URL de descarga
-download.file(url=FileUrl,destfile="./data/cameras.csv",method="curl") #Descarga los datos (el fichero)
-
+download.file(url=FileUrl,destfile="./data/cameras.csv") #Descarga los datos (el fichero)
+# ,method="curl" debe agregarse en algunos OS
 ```
 ```
 list.files(path="./data")

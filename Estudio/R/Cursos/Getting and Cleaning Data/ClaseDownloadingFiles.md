@@ -66,7 +66,7 @@ DateDownloaded
 ```
 
 ```
-## [1] "Sun May 11 22:50:01 2014"
+## [1] "Mon May 12 20:25:40 2014"
 ```
 
 
@@ -93,11 +93,15 @@ Así pues, para descargar se recomienda almacenar el dato URL en una variable y 
 
 ```r
 FileUrl <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD"  #Llena la variable con la URL de descarga
-download.file(url = FileUrl, destfile = "./data/cameras.csv", method = "curl")  #Descarga los datos (el fichero)
+download.file(url = FileUrl, destfile = "./data/cameras.csv")  #Descarga los datos (el fichero)
 ```
 
 ```
-## Warning: download had nonzero exit status
+## Error: esquema de URL sin soporte
+```
+
+```r
+# ,method='curl' debe agregarse en algunos OS
 ```
 
 ```
