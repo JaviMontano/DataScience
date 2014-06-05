@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Practica</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>Practica</h1>
+
+<h1>Clase: Reading DataTables 05/2014</h1>
+
+<h1>Curso: &ldquo;Getting and Cleaning Data&rdquo;</h1>
+
+<h1>Programa de Análisis de Datos de la John Hopkins en Coursera</h1>
+
+<p>Utilizar la información en R con funciones escritas en C, por lo que son más rápidas.</p>
+
+<h2>El paquete Data Table</h2>
+
+<p>El paquete fue escrito en C y ha demostrado ser mucho más eficiente para la ejecución de ciertas tareas, de manera especial para realizar filtros, grupos (agrupamientos) entre varios cálculos.</p>
+
+<pre><code>&gt; library(data.table) # Asumiendo que el paquete fue instalado correctamente
+&gt; DF = data.frame(x=rnorm(9),y=rep(c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;),each=3),z=rnorm(9))
+&gt; head(DF,3)
+          x y           z
+1 0.8458746 a -0.05059749
+2 0.4456808 a -0.51280434
+3 1.8164608 a  0.63592681
+
+&gt; DT = data.table(x=rnorm(9),y=rep(c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;),each=3),z=rnorm(9))
+&gt; head(DT,3)
+             x y          z
+1:  0.18934421 a  0.2314946
+2:  0.75691644 a -0.5226971
+3: -0.04592483 a  1.7968805
+
+</code></pre>
+
+<p>Con el código anterior se declaró a DT, tomando los datos de un data frames, como tabla. Veamos:</p>
+
+<pre><code>&gt; tables()
+     NAME NROW MB COLS  KEY
+[1,] DT      9 1  x,y,z    
+Total: 1MB
+
+</code></pre>
+
+<h2>Filtrando en Tablas</h2>
+
+<p>Para filtrar se utilizan los operadores [] pero de manera(s) diferente(s) a los dataframes.</p>
+
+<pre><code>&gt; DT[2,] # Filtrar la segunda columna de la tabla
+           x y          z
+1: 0.7569164 a -0.5226971
+&gt; DT[DT$y==&quot;a&quot;,] # Filtrar la columna &quot;y&quot; donde los elementos son iguales que &quot;a&quot;
+             x y          z
+1:  0.18934421 a  0.2314946
+2:  0.75691644 a -0.5226971
+3: -0.04592483 a  1.7968805
+
+</code></pre>
+
+<p>El filtro usando sólo un índice es basado en selección de filas. &ldquo;Rowbased&rdquo;</p>
+
+<pre><code>&gt; DT[c(2,3)]
+           x y          z
+1: 2.2599195 a -0.9796584
+2: 0.2276369 a  0.4690074
+
+</code></pre>
+
+<p>Intentar filtrar por columnas como en el dataframe, no funciona, pues realmente funciona diferente.</p>
+
+<p>En las DT todo lo que va después de la coma (por ejemplo: DT[,lo-que-sea]) es una expresión. Las expresiones son un grupo de declaraciones entre llaves. {}</p>
+
+<p>Las expresiones en los DT sirven para resumir grupos de datos.</p>
+
+<pre><code>&gt; DT[,list(mean(x),sum(z))] # Genera el promedio de X y la sumatoria de Z. Los muestra ordenadamente en dos columnas, para esto, las expresiones se unen en una lista.
+
+          V1        V2
+1: 0.4051781 -4.050779
+
+&gt; DT[,table(y)] # Genera un resumen de los datos que contiene el campo Y
+y
+a b c 
+3 3 3 
+
+</code></pre>
+
+<p>Otra cosa que se hace muy rápidamente, es agregar columnas.</p>
+
+<pre><code>&gt; DT[,w:=z^2] # Crea la nueva columna, creando un campo calculado.
+&gt; DT
+              x y          z         w
+1:  0.571448027 a -1.2162079 1.4791617
+2:  2.259919486 a -0.9796584 0.9597305
+3:  0.227636869 a  0.4690074 0.2199680
+4: -0.638341813 b -2.4511098 6.0079395
+5:  0.231304528 b -1.4863269 2.2091675
+6: -0.284364769 b  0.7950608 0.6321217
+7: -0.005913955 c -0.7871268 0.6195686
+8:  1.642346665 c  0.3585890 0.1285860
+9: -0.357432442 c  1.2469941 1.5549942
+
+</code></pre>
+
+<h3>Ojo</h3>
+
+<p>Crear un DT copiando el contenido de otro DT debe hacerse con cautela. Veamos lo que ocurre:</p>
+
+<pre><code>&gt; DT2 &lt;- DT # Definimos DT2 como DT1
+&gt; DT[,Y:=2] # En DT creamos la columna Y (mayúscula) con muchos 2 en su contenido
+&gt; DT2 # Se evidencia que recibió los valores de Y igual a 2
+              x y          z         w Y
+1:  0.571448027 a -1.2162079 1.4791617 2
+2:  2.259919486 a -0.9796584 0.9597305 2
+3:  0.227636869 a  0.4690074 0.2199680 2
+4: -0.638341813 b -2.4511098 6.0079395 2
+5:  0.231304528 b -1.4863269 2.2091675 2
+6: -0.284364769 b  0.7950608 0.6321217 2
+7: -0.005913955 c -0.7871268 0.6195686 2
+8:  1.642346665 c  0.3585890 0.1285860 2
+9: -0.357432442 c  1.2469941 1.5549942 2
+
+</code></pre>
+
+<p>Queda claro que debe usarse la función copy() para hacer una copia.</p>
+
+<p>Pueden realizarse múltiples operaciones</p>
+
+<pre><code>&gt; DT[,m:={tmp&lt;-(x+z);log2(tmp+5)}]# Se genera una expresión extensa para definir m
+&gt; DT
+              x y          z         w Y
+1:  0.571448027 a -1.2162079 1.4791617 2
+2:  2.259919486 a -0.9796584 0.9597305 2
+3:  0.227636869 a  0.4690074 0.2199680 2
+4: -0.638341813 b -2.4511098 6.0079395 2
+5:  0.231304528 b -1.4863269 2.2091675 2
+6: -0.284364769 b  0.7950608 0.6321217 2
+7: -0.005913955 c -0.7871268 0.6195686 2
+8:  1.642346665 c  0.3585890 0.1285860 2
+9: -0.357432442 c  1.2469941 1.5549942 2
+           m
+1: 2.1227523
+2: 2.6508245
+3: 2.5101123
+4: 0.9339868
+5: 1.9049571
+6: 2.4622345
+7: 2.0727778
+8: 2.8075477
+9: 2.5581603
+</code></pre>
+
+<p>También pueden presentarse operaciones tipo plyr.</p>
+
+<p>Se plantea el hecho de evaluar si x es mayor que cero. Después de eso, se plantea que cuando eso sea cierto, se asigne en una nueva columna, el promedio de los valores que cumplen la condición. De igual forma hacer el mismo procedimiento para los falsos.</p>
+
+<pre><code>&gt; DT[,a:=x&gt;0] # Crea una variable a, que identifica si x es mayor o no a 0.
+
+&gt; DT
+              x y          z         w Y
+1:  0.571448027 a -1.2162079 1.4791617 2
+2:  2.259919486 a -0.9796584 0.9597305 2
+3:  0.227636869 a  0.4690074 0.2199680 2
+4: -0.638341813 b -2.4511098 6.0079395 2
+5:  0.231304528 b -1.4863269 2.2091675 2
+6: -0.284364769 b  0.7950608 0.6321217 2
+7: -0.005913955 c -0.7871268 0.6195686 2
+8:  1.642346665 c  0.3585890 0.1285860 2
+9: -0.357432442 c  1.2469941 1.5549942 2
+           m     a
+1: 2.1227523  TRUE
+2: 2.6508245  TRUE
+3: 2.5101123  TRUE
+4: 0.9339868 FALSE
+5: 1.9049571  TRUE
+6: 2.4622345 FALSE
+7: 2.0727778 FALSE
+8: 2.8075477  TRUE
+9: 2.5581603 FALSE
+
+&gt; DT[,b:= mean(x+w),by=a] # Genera el promedio de todos los x+y cuando, a es TRUE, se lo asigna a su posición en b. Hace lo mismo con los falsos.
+
+&gt; DT
+              x y          z         w Y
+1:  0.571448027 a -1.2162079 1.4791617 2
+2:  2.259919486 a -0.9796584 0.9597305 2
+3:  0.227636869 a  0.4690074 0.2199680 2
+4: -0.638341813 b -2.4511098 6.0079395 2
+5:  0.231304528 b -1.4863269 2.2091675 2
+6: -0.284364769 b  0.7950608 0.6321217 2
+7: -0.005913955 c -0.7871268 0.6195686 2
+8:  1.642346665 c  0.3585890 0.1285860 2
+9: -0.357432442 c  1.2469941 1.5549942 2
+           m     a        b
+1: 2.1227523  TRUE 1.985854
+2: 2.6508245  TRUE 1.985854
+3: 2.5101123  TRUE 1.985854
+4: 0.9339868 FALSE 1.882143
+5: 1.9049571  TRUE 1.985854
+6: 2.4622345 FALSE 1.882143
+7: 2.0727778 FALSE 1.882143
+8: 2.8075477  TRUE 1.985854
+9: 2.5581603 FALSE 1.882143
+
+</code></pre>
+
+<h3>Variables especiales</h3>
+
+<p>.N un entero que contiene el número r. Sirve para contar cuántos de algún valor se dan.</p>
+
+<pre><code>&gt; set.seed(123);
+&gt; DT &lt;- data.table(x=sample(letters[1:3],1E5,TRUE))
+&gt; DT[,.N,by=x]
+   x     N
+1: a 33387
+2: c 33201
+3: b 33412
+</code></pre>
+
+<h3>Llaves primarias</h3>
+
+<p>Veamos el code:</p>
+
+<pre><code>&gt; DT &lt;- data.table(x=rep(c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;),each=100),y=rnorm(300))
+&gt; setkey[DT,x]
+&gt; DT[&#39;a&#39;]
+     x             y
+  1: a  0.3065846792
+  2: a  0.3227435073
+  3: a  1.3660792972
+  4: a -0.5888163026
+  5: a  1.6978318646
+  6: a  0.0563632681
+  7: a -0.0995934650
+  8: a -0.2101989963
+  ...
+
+</code></pre>
+
+<p>Teniendo una tabla dada, la función setkey sirve para establecer un campo como llave primaria. Esto es útil para establecer relaciones.</p>
+
+<pre><code>&gt; DT1 &lt;- data.table(x=c(&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;dt1&#39;), y=1:4)
+&gt; DT2 &lt;- data.table(x=c(&#39;a&#39;, &#39;b&#39;, &#39;dt2&#39;), z=5:7)
+&gt; setkey(DT1, x); setkey(DT2, x)
+&gt; merge(DT1, DT2)
+   x y z
+1: a 1 5
+2: a 2 5
+3: b 3 6
+
+</code></pre>
+
+<p>Con lo anterior se han combinado las tablas.</p>
+
+<p>Como último paso de la lección, tenemos la evaluación del tiempo transcurrido.
+ Así:</p>
+
+<pre><code>&gt; big_df &lt;- data.frame(x=rnorm(1E6), y=rnorm(1E6))
+&gt; file &lt;- tempfile()
+&gt; write.table(big_df, file=file, row.names=FALSE, col.names=TRUE, sep=&quot;\t&quot;, quote=FALSE)
+&gt; system.time(fread(file))
+   user  system elapsed 
+   1.31    0.01    1.32 
+&gt; system.time(read.table(file, header=TRUE, sep=&quot;\t&quot;))
+   user  system elapsed 
+  11.06    0.00   11.07 
+
+</code></pre>
+
+<p>Se logra ver una diferencia de casi diez veces del tiempo!</p>
+
+</body>
+
+</html>
+
